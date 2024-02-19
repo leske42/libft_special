@@ -15,7 +15,7 @@
 void	ft_putnbr_fd(int nb, int fd)
 {
 	__asm__ volatile (
-		"movl %0, %%eax; movsx %%eax, %%rax; xorq %%rbx, %%rbx;"
+		"movl %0, %%eax; movsx %%eax, %%rax; pushq %%rbx; xorq %%rbx, %%rbx;"
 		"cmp $-1, %%rax; jg 1f; imulq $-1, %%rax; movq $1, %%rdx;"
 		"movl %1, %%edi; sub $1, %%rsp; movq $45, (%%rsp);"
 		"movq %%rsp, %%rsi; pushq %%rax; movq $1, %%rax;"
@@ -26,7 +26,7 @@ void	ft_putnbr_fd(int nb, int fd)
 		"2:"
 		"movq $1, %%rax; movl %1, %%edi; movq %%rsp, %%rsi;"
 		"movq $1, %%rdx; syscall; decq %%rbx; popq %%rcx;"
-		"cmp $0, %%rbx; jne 2b;"
+		"cmp $0, %%rbx; jne 2b; popq %%rbx;"
 		:
 		: "r" (nb), "r" (fd)
 		: "memory", "rdi", "rsi", "rax", "rdx", "cc", "rcx"
@@ -57,7 +57,11 @@ int	main(void)
 {
 	//ft_putnbr_fd(2147483647, 1);
 	//ft_putchar_fd('\n', 1);
-	return (ft_putnbr_fd(-200, 1));
+	ft_putnbr_fd(-200, 1);
+	printf("\n");
+	ft_putnbr_fd(2147483647, 1);
+	printf("\n");
+	ft_putnbr_fd(-2147483648, 1);
 	//ft_putchar_fd('\n', 1);
 	//ft_putnbr_fd(-220, 1);
 	//ft_putchar_fd('\n', 1);
