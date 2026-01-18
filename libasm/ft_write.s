@@ -13,6 +13,6 @@ ft_write:
     neg rcx
     mov [rax], rcx
     mov rax, -1
-.done
+.done:
     ret
     
