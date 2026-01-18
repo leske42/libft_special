@@ -6,13 +6,13 @@
 #    By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/12 15:59:38 by mhuszar           #+#    #+#              #
-#    Updated: 2026/01/18 15:43:06 by mhuszar          ###   ########.fr        #
+#    Updated: 2026/01/18 16:36:16 by mhuszar          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 AS = nasm
 CC = cc
-ASFLAGS = -f elf64
+ASFLAGS = -f elf64 -g
 NAME = libasm.a
 SOURCE = hehe.s ft_strlen.s ft_strcmp.s
 OBJECTS = $(SOURCE:.s=.o)
