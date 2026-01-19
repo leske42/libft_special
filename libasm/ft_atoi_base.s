@@ -46,8 +46,10 @@ ft_atoi_base:
     jz .done
     mov rdi, r13
     mov rcx, r14
-    repne scasb
     inc rcx
+    repne scasb
+    test rcx, rcx
+    jz .error
     imul rbx, r14
     sub r14, rcx
     add rbx, r14
