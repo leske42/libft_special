@@ -2,10 +2,30 @@
 extern ft_strlen
 global ft_atoi_base
 
-find_position: ;D:str, A:char, C:len - not exposed so i won't keep the ABI
-    push rdi
-    repne scasb
-    pop rdi
+.validate_base:
+    xor rax, rax
+    test r14, r14
+    jz .error
+    sub rsp, 128
+    mov rcx, 16
+    mov rdi, rsp
+    rep stosq
+    mov rdi, r13
+.val_loop:
+    lodsb
+    cmp al, 0
+    jz .loop
+    cmp al, 48
+    jl .error
+    cmp al, 126
+    jg .error
+    test al, byte [rsp + rax]
+    jnz .error
+    mov byte [rsp + rax], al
+    jmp .val_loop
+.error:
+    xor rax, rax
+    jmp .epilogue
 
 ft_atoi_base:
     push rbx
@@ -19,7 +39,7 @@ ft_atoi_base:
     mov rdi, rsi
     call ft_strlen
     mov r14, rax
-    xor rax, rax
+    jmp .validate_base
 .loop:
     mov al, byte [r12]
     test al, al
@@ -37,6 +57,7 @@ ft_atoi_base:
 .done:
     mov rax, rbx
 .epilogue:
+    add rsp, 128
     pop r14
     pop r13
     pop r12

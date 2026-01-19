@@ -6,7 +6,7 @@
 /*   By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 14:41:11 by mhuszar           #+#    #+#             */
-/*   Updated: 2026/01/18 22:53:09 by mhuszar          ###   ########.fr       */
+/*   Updated: 2026/01/19 16:36:52 by mhuszar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int main(void)
     char *str = "12345678";
     printf("Length of %s is: %zu\n\n", str, ft_strlen(str));
 
-    /*STRCMP TEST*/
+    // /*STRCMP TEST*/
     char *str2 = "123traf";
     printf("Difference of %s and %s is: %d\n", str, str2, ft_strcmp(str, str2));
     printf("Difference per original strcmp function: %d\n", strcmp(str, str2));
@@ -71,6 +71,8 @@ int main(void)
     close(fd);
 
     /*ATOI BASE TEST*/
-    printf("The int value for %s is: %d\n\n", str, ft_atoi_base(str, "0123456789"));
+    printf("The int value for %s is: %d\n\n", str, ft_atoi_base(str, "0A23456789"));
+    char *b2str = "1110";
+    printf("The int value for %s is: %d\n\n", b2str, ft_atoi_base(b2str, "01"));
     return (0);
 }
