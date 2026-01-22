@@ -6,7 +6,7 @@
 /*   By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 14:41:11 by mhuszar           #+#    #+#             */
-/*   Updated: 2026/01/19 16:42:33 by mhuszar          ###   ########.fr       */
+/*   Updated: 2026/01/22 22:47:26 by mhuszar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ int main(void)
 
     // /*STRCMP TEST*/
     char *str2 = "123traf";
-    printf("Difference of %s and %s is: %d\n", str, str2, ft_strcmp(str, str2));
-    printf("Difference per original strcmp function: %d\n", strcmp(str, str2));
-    printf("Difference of %s and %s is: %d\n", str2, str2, ft_strcmp(str2, str2));
-    printf("Difference per original strcmp function: %d\n\n", strcmp(str2, str2));
+    // printf("Difference of %s and %s is: %d\n", str, str2, ft_strcmp(str, str2));
+    // printf("Difference per original strcmp function: %d\n", strcmp(str, str2));
+    // printf("Difference of %s and %s is: %d\n", str2, str2, ft_strcmp(str2, str2));
+    // printf("Difference per original strcmp function: %d\n\n", strcmp(str2, str2));
 
     /*STRCPY TEST*/
     char dst[9];
@@ -71,8 +71,11 @@ int main(void)
     close(fd);
 
     /*ATOI BASE TEST*/
-    printf("The int value for %s is: %d\n\n", str, ft_atoi_base(str, "0A23456789"));
-    char *b2str = "1110";
-    printf("The int value for %s is: %d\n\n", b2str, ft_atoi_base(b2str, "01"));
+    char array[100] = "       0000012345678"; //need to save first and last position, cant null terminate
+    //saving first position will fix both leading WS and negative issues
+    //not terminating will fix segfault
+    printf("The int value for %s is: %d\n\n", array, ft_atoi_base(array, "0123456789"));
+    char array2[100] = "-10";
+    printf("The int value for %s is: %d\n\n", array2, ft_atoi_base(array2, "01"));
     return (0);
 }

@@ -6,7 +6,7 @@
 #    By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/12 15:59:38 by mhuszar           #+#    #+#              #
-#    Updated: 2026/01/18 22:51:19 by mhuszar          ###   ########.fr        #
+#    Updated: 2026/01/19 17:49:28 by mhuszar          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,13 +18,13 @@ SOURCE = hehe.s ft_strlen.s ft_strcmp.s ft_strcpy.s ft_strdup.s ft_write.s ft_re
 			ft_atoi_base.s
 OBJECTS = $(SOURCE:.s=.o)
 
+all: $(NAME)
+
 $(NAME): $(OBJECTS)
 	ar -rc $(NAME) $(OBJECTS)
 
 %.o: %.s
 	$(AS) $(ASFLAGS) $< -o $@
-
-all: $(NAME)
 
 clean:
 	rm -f $(OBJECTS)
