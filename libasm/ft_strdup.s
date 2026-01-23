@@ -7,7 +7,7 @@ section .text
 ft_strdup:
     push rdi ;should i align this now or not
     call ft_strlen
-    mov rdi, rax
+    lea rdi, [rax + 1]
     call malloc
     pop rsi
     test rax, rax

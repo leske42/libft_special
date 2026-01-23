@@ -6,7 +6,7 @@
 /*   By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 14:41:11 by mhuszar           #+#    #+#             */
-/*   Updated: 2026/01/23 15:49:48 by mhuszar          ###   ########.fr       */
+/*   Updated: 2026/01/23 18:23:21 by mhuszar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <errno.h>
+#include <valgrind/valgrind.h>
 
 size_t  ft_strlen(const char *str);
 int     ft_strcmp(const char *s1, const char *s2);
@@ -65,8 +66,10 @@ int main(void)
     buf[14] = 0;
     printf("The buffer after reading contains: %s\n", buf);
     printf("That's right ft_read was reading itself!!\n");
-    char *hehe;
+    char *hehe = NULL;
+    VALGRIND_DISABLE_ERROR_REPORTING;
     ret = ft_read(fd, hehe, 14);
+    VALGRIND_ENABLE_ERROR_REPORTING;
     printf("return value for FAIL_TEST is: %d, errno is set to: %s\n\n", ret, strerror(errno));
     close(fd);
 
