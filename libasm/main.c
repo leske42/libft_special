@@ -6,7 +6,7 @@
 /*   By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 14:41:11 by mhuszar           #+#    #+#             */
-/*   Updated: 2026/01/22 22:47:26 by mhuszar          ###   ########.fr       */
+/*   Updated: 2026/01/23 15:49:48 by mhuszar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,9 @@ int main(void)
     close(fd);
 
     /*ATOI BASE TEST*/
-    char array[100] = "       0000012345678"; //need to save first and last position, cant null terminate
-    //saving first position will fix both leading WS and negative issues
-    //not terminating will fix segfault
-    printf("The int value for %s is: %d\n\n", array, ft_atoi_base(array, "0123456789"));
-    char array2[100] = "-10";
-    printf("The int value for %s is: %d\n\n", array2, ft_atoi_base(array2, "01"));
+    char *test_str = "  \n      \t         +17321ll";
+    printf("The int value for %s is: %d\n\n", test_str, ft_atoi_base(test_str, "0123456789"));
+    char array[100] = "-10";
+    printf("The int value for %s is: %d\n\n", array, ft_atoi_base(array, "01"));
     return (0);
 }

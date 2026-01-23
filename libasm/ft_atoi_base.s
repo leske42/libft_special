@@ -16,9 +16,10 @@ ft_atoi_base:
     mov r14, rax
     jmp .validate_base
 .loop:
-    mov al, byte [r12]
-    test al, al
+    cmp r8, r12
     jz .done
+    mov al, byte [r12]
+    ;test al, al
     mov rdi, r13
     mov rcx, r14
     inc rcx
@@ -98,5 +99,6 @@ ft_atoi_base:
     jg .survey_done
     jmp .numbers
 .survey_done:
-    mov byte [rsi - 1], 0
+    lea r8, [rsi - 1]
+    ;mov byte [rsi - 1], 0
     jmp .loop
