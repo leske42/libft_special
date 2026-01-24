@@ -6,7 +6,7 @@
 /*   By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 14:41:11 by mhuszar           #+#    #+#             */
-/*   Updated: 2026/01/23 18:23:21 by mhuszar          ###   ########.fr       */
+/*   Updated: 2026/01/24 21:22:01 by mhuszar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,21 @@
 #include <errno.h>
 #include <valgrind/valgrind.h>
 
+typedef struct t_list {
+    void *data;
+    struct t_list *next;
+} t_list;
+
 size_t  ft_strlen(const char *str);
 int     ft_strcmp(const char *s1, const char *s2);
 char    *ft_strcpy(char *dest, const char *src);
 char    *ft_strdup(const char *s);
 ssize_t ft_write(int fd, const void *buf, size_t count);
 ssize_t ft_read(int fd, void *buf, size_t count);
+//bonus functions
 int     ft_atoi_base(char *str, char *base);
+void    ft_list_push_front(t_list **begin_list, void *data);
+void    ft_free_list(t_list *list);
 
 //TODO: Look into
 //https://learn.microsoft.com/en-us/cpp/build/stack-usage?view=msvc-170
@@ -36,7 +44,7 @@ int main(void)
     char *str = "12345678";
     printf("Length of %s is: %zu\n\n", str, ft_strlen(str));
 
-    // /*STRCMP TEST*/
+    /*STRCMP TEST*/
     char *str2 = "123traf";
     // printf("Difference of %s and %s is: %d\n", str, str2, ft_strcmp(str, str2));
     // printf("Difference per original strcmp function: %d\n", strcmp(str, str2));
@@ -78,5 +86,25 @@ int main(void)
     printf("The int value for %s is: %d\n\n", test_str, ft_atoi_base(test_str, "0123456789"));
     char array[100] = "-10";
     printf("The int value for %s is: %d\n\n", array, ft_atoi_base(array, "01"));
+
+    /*LIST TESTS*/
+    t_list *first = malloc(sizeof(t_list));
+    if (!first)
+        return (1);
+    char *data1 = "data1";
+    first->data = (void*)data1;
+    first->next = NULL;
+    char *data2 = "data2";
+    t_list **list = &first;
+    ft_list_push_front(list, (void *)data2);
+
+    t_list *proxy = *list;
+    int counter = 1;
+    while (proxy)
+    {
+        printf("Node number %d content: %s\n", counter++, (char*)proxy->data);
+        proxy = proxy->next;
+    }
+    ft_free_list(*list);
     return (0);
 }
