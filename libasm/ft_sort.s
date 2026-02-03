@@ -4,7 +4,7 @@ extern ft_list_size
 
 
 section .text
-;void ft_list_sort(t_list **begin_list, int (*cmp)()); TODO: update r13 with list top, go through logic, add testing functions
+;void ft_list_sort(t_list **begin_list, int (*cmp)()); TODO: go through logic, add testing functions
 ft_list_sort:
     push r12
     push r13
@@ -16,11 +16,11 @@ ft_list_sort:
     call ft_list_size
     pop rdi
     push rax            ;save list size on stack
-    mov rsi, rdi        ;set B and A to be initially same
     mov rbx, 1          ;init sublist len
     mov rcx, rbx
     xor r13, r13        ;newly built list top
     xor r14, r14        ;newly built list end
+    mov rsi, rdi        ;set B and A to be initially same
     jmp .mark_head_B
 .outer_loop:
     mov rdi, r13        ;reset tmp head ptrs
@@ -45,19 +45,24 @@ ft_list_sort:
 .setup_len:
     ;lea rcx, [rbx - rcx]
     neg rcx
-    lea rcx, [rbx + rcx]
+    lea rcx, [rbx + rcx]    ;sublist A will run until the counted len
+    mov rdx, rbx            ;sublist B will run until sublist_len (or NULL)
 .merge_A_B:
     ;test rdi, rdi
     test rcx, rcx
     jz .sublist_A_over
-    test rsi, rsi       ;if only sublist B is over, keep merging As
+    test rdx, rdx			;if only sublist B is over, keep merging As
+    jz .smaller_A
+    test rsi, rsi
     jz .smaller_A
     push rdi
     push rsi
     push rcx
+    push rdx
     mov rdi, [rdi]
     mov rsi, [rsi]
     call r12            ;perform compare
+    pop rdx
     pop rcx
     pop rsi
     pop rdi
@@ -91,10 +96,13 @@ ft_list_sort:
     mov qword [rsi + 8], 0
     mov r14, rsi
     mov rsi, rax
+    dec rdx
     jmp .merge_A_B
 .sublist_A_over:
-    test rsi, rsi       ;if there is no B left, mark new sublists
-    jz .mark_head_A
+    test rdx, rdx       ;if there is no B left, mark new sublists
+    jz .inner_loop
+    test rsi, rsi       ;B reached the end of the big list, all merges are done
+    jz .all_merges_done
     jmp .smaller_B      ;if there is any B left, merge it
 .all_merges_done:
     shl rbx, 1          ;double sublist len
