@@ -30,12 +30,6 @@ ft_list_sort:
 .inner_loop:
     mov rcx, rbx        ;init temp counter to sublist len
     mov rdi, rsi        ;A begins from previous B
-.mark_head_A:
-    mov rdi, [rdi + 8]  ;travel along the list,
-    dec rcx             ;sublist len times to skip B nodes ;HERE should NEVER be zero (B nodes checked already)
-    jnz .mark_head_A
-    mov rsi, rdi        ;B head begins from new A
-    mov rcx, rbx
 .mark_head_B:
     mov rsi, [rsi + 8]  ;B head skips the A nodes
     test rsi, rsi       ;check if early end (means we have only an A list)
@@ -99,10 +93,10 @@ ft_list_sort:
     dec rdx
     jmp .merge_A_B
 .sublist_A_over:
-    test rdx, rdx       ;if there is no B left, mark new sublists
-    jz .inner_loop
     test rsi, rsi       ;B reached the end of the big list, all merges are done
     jz .all_merges_done
+    test rdx, rdx       ;otherwise, if there is no B left, mark new sublists
+    jz .inner_loop
     jmp .smaller_B      ;if there is any B left, merge it
 .all_merges_done:
     shl rbx, 1          ;double sublist len
