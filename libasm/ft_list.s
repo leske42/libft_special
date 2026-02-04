@@ -39,6 +39,7 @@ ft_list_size:
     jz .done
     mov rdi, [rdi + 8]
     inc rax
+    jmp .loop
 .done:
     ret
 

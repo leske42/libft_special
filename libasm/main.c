@@ -6,7 +6,7 @@
 /*   By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 14:41:11 by mhuszar           #+#    #+#             */
-/*   Updated: 2026/02/04 17:37:01 by mhuszar          ###   ########.fr       */
+/*   Updated: 2026/02/04 17:47:37 by mhuszar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,12 @@ char    *ft_strcpy(char *dest, const char *src);
 char    *ft_strdup(const char *s);
 ssize_t ft_write(int fd, const void *buf, size_t count);
 ssize_t ft_read(int fd, void *buf, size_t count);
-//bonus functions
+#ifdef BONUS
 int     ft_atoi_base(char *str, char *base);
 void    ft_list_push_front(t_list **begin_list, void *data);
 void    ft_free_list(t_list *list);
+int     ft_list_size(t_list *list);
+#endif
 
 //TODO: Look into
 //https://learn.microsoft.com/en-us/cpp/build/stack-usage?view=msvc-170
@@ -101,6 +103,7 @@ int main(void)
     char *data2 = "data2";
     t_list **list = &first;
     ft_list_push_front(list, (void *)data2);
+    printf("List size after push is: %d\n", ft_list_size(*list));
 
     t_list *proxy = *list;
     int counter = 1;
