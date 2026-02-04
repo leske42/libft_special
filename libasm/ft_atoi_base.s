@@ -19,7 +19,6 @@ ft_atoi_base:
     cmp r8, r12
     jz .done
     mov al, byte [r12]
-    ;test al, al
     mov rdi, r13
     mov rcx, r14
     inc rcx
@@ -100,5 +99,4 @@ ft_atoi_base:
     jmp .numbers
 .survey_done:
     lea r8, [rsi - 1]
-    ;mov byte [rsi - 1], 0
     jmp .loop

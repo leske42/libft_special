@@ -23,7 +23,7 @@ ft_list_push_front:
 
 ft_free_list:
     push qword [rdi + 8]
-    ;push rdi                ;enable commented part if data is heap allocated
+    ;push rdi                   ;enable commented part if data is heap allocated
     ;mov rdi, [rdi]
     ;call free
     ;pop rdi
@@ -43,6 +43,7 @@ ft_list_size:
 .done:
     ret
 
+;void    ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)(), void (*free_fct)(void *));
 ft_list_remove_if:
     push rbx
     push r12
@@ -50,12 +51,12 @@ ft_list_remove_if:
     push r14
     push r15
     push rdi
-    mov rbx, [rdi]      ;will be list iterator
-    mov r12, rsi        ;stores data ref
-    mov r13, rdx        ;stores cmp function
-    mov r14, rcx        ;is the 4th arg really rcx?
-    xor r15, r15        ;will store prev node
-    push r15            ;will store new head
+    mov rbx, [rdi]              ;will be list iterator
+    mov r12, rsi                ;stores data ref
+    mov r13, rdx                ;stores cmp function
+    mov r14, rcx                ;is the 4th arg really rcx?
+    xor r15, r15                ;will store prev node
+    push r15                    ;will store new head
 .check_loop:
     test rbx, rbx
     jz .finish
@@ -67,14 +68,14 @@ ft_list_remove_if:
     mov r15, rbx
     mov rax, [rsp]
     test rax, rax
-    cmovz rax, rbx      ;save new head on stack
+    cmovz rax, rbx              ;save new head on stack
     mov [rsp], rax
     mov rbx, [rbx + 8]
     jmp .check_loop
 .finish:
     pop rax
     pop rdi
-    mov [rdi], rax      ;set new head
+    mov [rdi], rax              ;set new head
     pop r15
     pop r14
     pop r13

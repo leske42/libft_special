@@ -4,70 +4,65 @@ extern ft_list_size
 
 
 section .text
-;void ft_list_sort(t_list **begin_list, int (*cmp)()); TODO: go through logic, add testing functions
+;void ft_list_sort(t_list **begin_list, int (*cmp)());
 ft_list_sort:
     push r12
     push r13
     push r14
     push rdi
-    mov r12, rsi        ;save cmp function
+    mov r12, rsi            ;save cmp function
     mov rdi, [rdi]
     push rdi
     call ft_list_size
     pop rdi
-    push rax            ;save list size on stack
-    mov rbx, 1          ;init sublist len
-    mov rcx, rbx
-    xor r13, r13        ;newly built list top
-    xor r14, r14        ;newly built list end
-    mov rsi, rdi        ;set B and A to be initially same
+    push rax                ;save list size on stack
+    mov rbx, 1              ;init sublist len
+    mov rcx, rbx			;rcx will be sublist A len counter
+    xor r13, r13            ;newly built list top
+    xor r14, r14            ;newly built list end
+    mov rsi, rdi            ;set B and A to be initially same
     jmp .mark_head_B
-.outer_loop:
-    mov rdi, r13        ;reset tmp head ptrs
+.outer_loop:				;outer loop starts whenever all sublists of a big list are merged
+    mov rdi, r13            ;reset tmp head ptrs
     mov rsi, r13
     xor r13, r13
     xor r14, r14
-.inner_loop:
-    mov rcx, rbx        ;init temp counter to sublist len
-    mov rdi, rsi        ;A begins from previous B
+.inner_loop:				;inner loop marks and merges two sublists from a big list
+    mov rcx, rbx            ;init temp counter to sublist len
+    mov rdi, rsi            ;A begins from previous B
 .mark_head_B:
-    mov rsi, [rsi + 8]  ;B head skips the A nodes
-    test rsi, rsi       ;check if early end (means we have only an A list)
-    jz  .setup_len_comp
+    mov rsi, [rsi + 8]      ;B head skips the A nodes
     dec rcx
+    test rsi, rsi           ;check if early end (means we have only an A list)
+    jz  .set_sublist_len
+	cmp rcx, 0
     jnz .mark_head_B
-    jmp .setup_len
-.setup_len_comp:
-    dec rcx
-.setup_len:
-    ;lea rcx, [rbx - rcx]
+.set_sublist_len:
     neg rcx
     lea rcx, [rbx + rcx]    ;sublist A will run until the counted len
     mov rdx, rbx            ;sublist B will run until sublist_len (or NULL)
-    ;dec rcx
 .merge_A_B:
-    ;test rdi, rdi
     test rcx, rcx
     jz .sublist_A_over
     test rdx, rdx			;if only sublist B is over, keep merging As
     jz .smaller_A
     test rsi, rsi
     jz .smaller_A
-    push rdi
+    push rdi				;prepare for call
     push rsi
     push rcx
     push rdx
     mov rdi, [rdi]
     mov rsi, [rsi]
-    call r12            ;perform compare
+    call r12            	;perform compare
     pop rdx
     pop rcx
     pop rsi
     pop rdi
-    cmp eax, 0          ;check compare result
+    cmp eax, 0          	;check compare result
     jg .smaller_B
-.smaller_A:             ;append A top to Big List end
-    test r14, r14
+.smaller_A:             	;append A top to Big List end
+    test r14, r14			;make it also Big List head if none yet
     jnz .old_head_A
     mov r13, rdi
     mov r14, rdi
@@ -81,8 +76,8 @@ ft_list_sort:
     mov rdi, rax
     dec rcx             
     jmp .merge_A_B
-.smaller_B:             ;append B top to Big List end
-    test r14, r14
+.smaller_B:             	;append B top to Big List end
+    test r14, r14			;make it also Big List head if none yet
     jnz .old_head_B
     mov r13, rsi
     mov r14, rsi
@@ -97,18 +92,18 @@ ft_list_sort:
     dec rdx
     jmp .merge_A_B
 .sublist_A_over:
-    test rsi, rsi       ;B reached the end of the big list, all merges are done
+    test rsi, rsi       	;B reached the end of the big list, all merges are done
     jz .all_merges_done
-    test rdx, rdx       ;otherwise, if there is no B left, mark new sublists
+    test rdx, rdx       	;otherwise, if there is no B left, mark new sublists
     jz .inner_loop
-    jmp .smaller_B      ;if there is any B left, merge it
+    jmp .smaller_B      	;if there is any B left, merge it
 .all_merges_done:
-    shl rbx, 1          ;double sublist len
-    cmp rbx, [rsp]      ;check if sublist len is >= list len  
-    jl .outer_loop      ;if no, continue
+    shl rbx, 1          	;double sublist len
+    cmp rbx, [rsp]      	;check if sublist len is >= list len  
+    jl .outer_loop      	;if no, continue
     pop rax
     pop rdi
-    mov [rdi], r13      ;store result behind double ptr
+    mov [rdi], r13      	;store result behind double ptr
     pop r14
     pop r13
     pop r12
