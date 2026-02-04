@@ -71,9 +71,9 @@ ft_list_sort:
     .old_head_A:
     mov [r14 + 8], rdi
     .new_head_A:
+    mov r14, rdi
     mov rax, [rdi + 8]
     mov qword [rdi + 8], 0
-    mov r14, rdi
     mov rdi, rax
     dec rcx             
     jmp .merge_A_B
@@ -86,9 +86,9 @@ ft_list_sort:
     .old_head_B:
     mov [r14 + 8], rsi
     .new_head_B:
+    mov r14, rsi
     mov rax, [rsi + 8]
     mov qword [rsi + 8], 0
-    mov r14, rsi
     mov rsi, rax
     dec rdx
     jmp .merge_A_B
@@ -102,6 +102,7 @@ ft_list_sort:
     shl rbx, 1          ;double sublist len
     cmp rbx, [rsp]      ;check if sublist len is >= list len  
     jl .outer_loop      ;if no, continue
+    pop rax
     pop rdi
     mov [rdi], r13      ;store result behind double ptr
     pop r14

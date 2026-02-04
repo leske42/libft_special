@@ -6,7 +6,7 @@
 /*   By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 14:41:11 by mhuszar           #+#    #+#             */
-/*   Updated: 2026/02/04 18:39:32 by mhuszar          ###   ########.fr       */
+/*   Updated: 2026/02/04 18:50:47 by mhuszar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void    ft_list_push_front(t_list **begin_list, void *data);
 void    ft_free_list(t_list *list);
 int     ft_list_size(t_list *list);
 void    ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)(), void (*free_fct)(void *));
+void    ft_list_sort(t_list **begin_list, int (*cmp)());
 
 void    ft_free_function(void *data)
 {
@@ -121,7 +122,7 @@ int main(void)
     char *strings[10] = {"data2", "data2", "data16", "data35", "data5", "data8", "data22", "data333", "data42", "data5"};
     t_list **list = &first;
     int ctr = 0;
-    while (ctr < 10)
+    while (ctr < 9)
         ft_list_push_front(list, (void *)strings[ctr++]);
     printf("List size after push is: %d\n", ft_list_size(*list));
     ft_print_list(*list);
@@ -131,6 +132,10 @@ int main(void)
         printf("\nPrinting list after removing data:\n");
         ft_print_list(*list);
     }
+    #include <string.h>
+    ft_list_sort(list, strcmp);
+    printf("\nPrinting sorted list:\n");
+    ft_print_list(*list);
     ft_free_list(*list);
 #endif
     return (0);
