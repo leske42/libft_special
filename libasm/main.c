@@ -6,7 +6,7 @@
 /*   By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 14:41:11 by mhuszar           #+#    #+#             */
-/*   Updated: 2026/02/04 18:50:47 by mhuszar          ###   ########.fr       */
+/*   Updated: 2026/02/04 19:55:49 by mhuszar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,13 +116,13 @@ int main(void)
     t_list *first = malloc(sizeof(t_list));
     if (!first)
         return (1);
-    char *data1 = "data1";
-    first->data = (void*)data1;
+    char *init = "data6";
+    first->data = (void*)init;
     first->next = NULL;
-    char *strings[10] = {"data2", "data2", "data16", "data35", "data5", "data8", "data22", "data333", "data42", "data5"};
+    char *strings[10] = {"data0", "data4", "data7", "data7", "data2", "data0", "data5", "data1", "data9", "data3"};
     t_list **list = &first;
     int ctr = 0;
-    while (ctr < 9)
+    while (ctr < 10)
         ft_list_push_front(list, (void *)strings[ctr++]);
     printf("List size after push is: %d\n", ft_list_size(*list));
     ft_print_list(*list);

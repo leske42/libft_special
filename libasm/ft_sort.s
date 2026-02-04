@@ -33,14 +33,18 @@ ft_list_sort:
 .mark_head_B:
     mov rsi, [rsi + 8]  ;B head skips the A nodes
     test rsi, rsi       ;check if early end (means we have only an A list)
-    jz  .merge_A_B
+    jz  .setup_len_comp
     dec rcx
     jnz .mark_head_B
+    jmp .setup_len
+.setup_len_comp:
+    dec rcx
 .setup_len:
     ;lea rcx, [rbx - rcx]
     neg rcx
     lea rcx, [rbx + rcx]    ;sublist A will run until the counted len
     mov rdx, rbx            ;sublist B will run until sublist_len (or NULL)
+    ;dec rcx
 .merge_A_B:
     ;test rdi, rdi
     test rcx, rcx
@@ -60,7 +64,7 @@ ft_list_sort:
     pop rcx
     pop rsi
     pop rdi
-    cmp rax, 0          ;check compare result
+    cmp eax, 0          ;check compare result
     jg .smaller_B
 .smaller_A:             ;append A top to Big List end
     test r14, r14
