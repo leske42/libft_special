@@ -6,13 +6,13 @@
 #    By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/12 15:59:38 by mhuszar           #+#    #+#              #
-#    Updated: 2026/02/04 18:15:49 by mhuszar          ###   ########.fr        #
+#    Updated: 2026/02/04 21:21:02 by mhuszar          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 MAKEFLAGS += --no-print-directory
 AS = nasm
-CC = cc
+CC = clang-12
 ASFLAGS = -f elf64 -g
 NAME = libasm.a
 SOURCE = hehe.s ft_strlen.s ft_strcmp.s ft_strcpy.s ft_strdup.s ft_write.s ft_read.s \
