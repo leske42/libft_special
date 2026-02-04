@@ -6,7 +6,7 @@
 /*   By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 14:41:11 by mhuszar           #+#    #+#             */
-/*   Updated: 2026/01/24 21:22:01 by mhuszar          ###   ########.fr       */
+/*   Updated: 2026/02/04 17:37:01 by mhuszar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,13 @@ int main(void)
 
     /*STRCMP TEST*/
     char *str2 = "123traf";
-    // printf("Difference of %s and %s is: %d\n", str, str2, ft_strcmp(str, str2));
-    // printf("Difference per original strcmp function: %d\n", strcmp(str, str2));
-    // printf("Difference of %s and %s is: %d\n", str2, str2, ft_strcmp(str2, str2));
-    // printf("Difference per original strcmp function: %d\n\n", strcmp(str2, str2));
+    if (!RUNNING_ON_VALGRIND) /*have to do this cause repne cmpsb is not supported before our patch is in release*/
+    {
+        printf("Difference of %s and %s is: %d\n", str, str2, ft_strcmp(str, str2));
+        printf("Difference per original strcmp function: %d\n", strcmp(str, str2));
+        printf("Difference of %s and %s is: %d\n", str2, str2, ft_strcmp(str2, str2));
+        printf("Difference per original strcmp function: %d\n\n", strcmp(str2, str2));
+    }
 
     /*STRCPY TEST*/
     char dst[9];
@@ -81,6 +84,7 @@ int main(void)
     printf("return value for FAIL_TEST is: %d, errno is set to: %s\n\n", ret, strerror(errno));
     close(fd);
 
+#ifdef BONUS
     /*ATOI BASE TEST*/
     char *test_str = "  \n      \t         +17321ll";
     printf("The int value for %s is: %d\n\n", test_str, ft_atoi_base(test_str, "0123456789"));
@@ -106,5 +110,6 @@ int main(void)
         proxy = proxy->next;
     }
     ft_free_list(*list);
+#endif
     return (0);
 }

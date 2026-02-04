@@ -6,10 +6,11 @@
 #    By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/12 15:59:38 by mhuszar           #+#    #+#              #
-#    Updated: 2026/01/25 23:04:51 by mhuszar          ###   ########.fr        #
+#    Updated: 2026/02/04 17:29:31 by mhuszar          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+MAKEFLAGS += --no-print-directory
 AS = nasm
 CC = cc
 ASFLAGS = -f elf64 -g
@@ -35,5 +36,14 @@ fclean: clean
 
 re: fclean all
 
+bonus: all
+	$(CC) -g -DBONUS=1 main.c $(NAME)
+	./a.out
+	@$(MAKE) clean > /dev/null
+
 test: all
 	$(CC) -g main.c $(NAME)
+	./a.out
+	@$(MAKE) clean > /dev/null
+
+.PHONY: all clean fclean re bonus test
