@@ -6,7 +6,7 @@
 /*   By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 14:41:11 by mhuszar           #+#    #+#             */
-/*   Updated: 2026/02/04 17:47:37 by mhuszar          ###   ########.fr       */
+/*   Updated: 2026/02/04 18:39:32 by mhuszar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,24 @@ int     ft_atoi_base(char *str, char *base);
 void    ft_list_push_front(t_list **begin_list, void *data);
 void    ft_free_list(t_list *list);
 int     ft_list_size(t_list *list);
+void    ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)(), void (*free_fct)(void *));
+
+void    ft_free_function(void *data)
+{
+    (void)data;
+    printf("\n\"Freeing\" content: %s\n", (char *)data);
+    return ;
+}
+
+void    ft_print_list(t_list *proxy)
+{
+    int counter = 1;
+    while (proxy)
+    {
+        printf("Node number %d content: %s\n", counter++, (char*)proxy->data);
+        proxy = proxy->next;
+    }
+}
 #endif
 
 //TODO: Look into
@@ -100,17 +118,18 @@ int main(void)
     char *data1 = "data1";
     first->data = (void*)data1;
     first->next = NULL;
-    char *data2 = "data2";
+    char *strings[10] = {"data2", "data2", "data16", "data35", "data5", "data8", "data22", "data333", "data42", "data5"};
     t_list **list = &first;
-    ft_list_push_front(list, (void *)data2);
+    int ctr = 0;
+    while (ctr < 10)
+        ft_list_push_front(list, (void *)strings[ctr++]);
     printf("List size after push is: %d\n", ft_list_size(*list));
-
-    t_list *proxy = *list;
-    int counter = 1;
-    while (proxy)
+    ft_print_list(*list);
+    if (!RUNNING_ON_VALGRIND)
     {
-        printf("Node number %d content: %s\n", counter++, (char*)proxy->data);
-        proxy = proxy->next;
+        ft_list_remove_if(list, (void *)strings[0], ft_strcmp, ft_free_function);
+        printf("\nPrinting list after removing data:\n");
+        ft_print_list(*list);
     }
     ft_free_list(*list);
 #endif
