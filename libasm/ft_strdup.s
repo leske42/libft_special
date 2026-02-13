@@ -5,7 +5,7 @@ extern malloc
 
 section .text
 ft_strdup:
-    push rdi ;should i align this now or not
+    push rdi
     call ft_strlen
     lea rdi, [rax + 1]
     call malloc
@@ -13,6 +13,8 @@ ft_strdup:
     test rax, rax
     jz .done
     mov rdi, rax
+    sub rsp, 8
     call ft_strcpy
+    add rsp, 8
 .done:
     ret

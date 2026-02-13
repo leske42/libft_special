@@ -12,7 +12,9 @@ ft_atoi_base:
     mov r12, rdi
     mov r13, rsi
     mov rdi, rsi
+    sub rsp, 8
     call ft_strlen
+    add rsp, 8
     mov r14, rax
     jmp .validate_base
 .loop:

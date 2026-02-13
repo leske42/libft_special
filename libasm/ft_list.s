@@ -25,7 +25,9 @@ ft_free_list:
     push qword [rdi + 8]
     ;push rdi                   ;enable commented part if data is heap allocated
     ;mov rdi, [rdi]
+    ;sub rsp, 8
     ;call free
+    ;add rsp, 8
     ;pop rdi
     call free
     pop rdi
@@ -87,11 +89,11 @@ ft_list_remove_if:
     call r14
     push qword [rbx + 8]
     mov rdi, rbx
+    sub rsp, 8
     call free
+    add rsp, 8
     pop rbx
     test r15, r15               ;check if previous node is set
     jz .check_loop
     mov qword [r15 + 8], rbx    ;if yes, restore link
     jmp .check_loop
-
-

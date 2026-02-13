@@ -15,4 +15,3 @@ ft_write:
     mov rax, -1
 .done:
     ret
-    
