@@ -6,7 +6,7 @@ ft_read:
     mov rax, 0
     syscall
     test rax, rax
-    jz .done
+    jns .done
     push rax
     call __errno_location
     pop rcx

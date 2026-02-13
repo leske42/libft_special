@@ -6,7 +6,7 @@ ft_write:
     mov rax, 1
     syscall
     test rax, rax
-    jz .done
+    jns .done
     push rax
     call __errno_location
     pop rcx
