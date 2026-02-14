@@ -70,6 +70,7 @@ ft_atoi_base:
 
 .survey:
     mov rsi, r12
+    xor r8, r8
 .whitespace:
     lodsb
     cmp al, 0
@@ -98,7 +99,10 @@ ft_atoi_base:
     jl .survey_done
     cmp al, 57
     jg .survey_done
+    inc r8
     jmp .numbers
 .survey_done:
+    test r8, r8
+    jz .error
     lea r8, [rsi - 1]
     jmp .loop
