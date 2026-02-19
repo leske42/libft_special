@@ -6,7 +6,7 @@
 /*   By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 11:36:23 by mhuszar           #+#    #+#             */
-/*   Updated: 2026/02/15 16:13:27 by mhuszar          ###   ########.fr       */
+/*   Updated: 2026/02/19 18:56:24 by mhuszar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	__asm__ volatile (
 		"xor %%rdx, %%rdx; mulq %%rdi; jno 1f;"
 		"xor %%rax, %%rax;"
-		"1: "
-		: "=a" (total_size)
+		"1: xor %%rdx, %%rdx;"
+		: "=a" (total_size), "=d" (result)
 		: "D"(nmemb), "a"(size)
-		: "memory", "cc", "flags", "rdx", "rsi"
+		: "memory", "cc", "flags"
 	);
 	if (total_size)
 		result = malloc(total_size);
