@@ -1,33 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/24 21:34:12 by mhuszar           #+#    #+#             */
-/*   Updated: 2026/02/19 17:49:56 by mhuszar          ###   ########.fr       */
+/*   Created: 2023/05/03 14:28:21 by mhuszar           #+#    #+#             */
+/*   Updated: 2026/02/19 17:50:20 by mhuszar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *str)
+char	*ft_strdup(const char *src)
 {
-	size_t	result;
+	size_t	len;
+	char	*dst;
 
-	__asm__ volatile (
-		"cld; xor %%rax, %%rax; mov $-1, %%rcx;"
-		"repne scasb;"
-		"neg %%rcx; dec %%rcx;"
-		: "=c" (result)
-		: "D" (str)
-		: "rax", "cc", "flags"
-	);
-	return (result);
+	len = ft_strlen(src) + 1;
+	dst = malloc(len);
+	if (dst)
+		ft_strlcpy(dst, src, len);
+	return (dst);
 }
-/*
-int main(void)
-{
-	printf("%zu\n", ft_strlen("123456789"));
-}*/
+
+// #include<stdio.h>
+// int	main(void)
+// {
+// 	printf("\e[2;40m%s", ft_strdup("Kalap kabat"));
+// 	return (0);
+// }
