@@ -6,36 +6,30 @@
 /*   By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 17:43:52 by mhuszar           #+#    #+#             */
-/*   Updated: 2024/02/17 16:42:15 by mhuszar          ###   ########.fr       */
+/*   Updated: 2026/02/19 18:14:29 by mhuszar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-
 int	ft_isalnum(int c)
 {
-	int result;
+	int	result;
 
 	__asm__ volatile (
-		"xorq %%rdi, %%rdi;"
-		"movl %1, %%edi;"
-		"call *%2;"
-		"cmp $0, %%rax;"
-		"jg 1f;"
-		"call *%3;"
-		"1:"
-		"movl %%eax, %0;"
-		: "=r" (result)
-		: "r" (c), "r" (ft_isdigit), "r" (ft_isalpha)
-		: "cc", "rax", "rdi"
+		"or %%rcx, %%rdx;"
+		: "=d" (result)
+		: "c" (ft_isdigit(c)), "d" (ft_isalpha(c))
+		:
 	);
 	return (result);
 }
-/*
-#include<stdio.h>
-int main(void)
-{
-	printf("%d", ft_isalnum('X'));
-	return (0);
-}*/
+
+// #include<stdio.h>
+// int main(void)
+// {
+// 	printf("%d\n", ft_isalnum('9'));
+// 	printf("%d\n", ft_isalnum('X'));
+// 	printf("%d\n", ft_isalnum('!'));
+// 	return (0);
+// }
