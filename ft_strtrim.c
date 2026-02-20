@@ -6,7 +6,7 @@
 /*   By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 17:20:18 by mhuszar           #+#    #+#             */
-/*   Updated: 2026/02/20 21:16:34 by mhuszar          ###   ########.fr       */
+/*   Updated: 2026/02/20 21:29:47 by mhuszar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 	__asm__ volatile (
 		"push %%rdi; push %%rcx; cld; xor %%r8, %%r8;"
 		"0: test %%r8, %%r8; jz 1f; std;"
-		"1: test %%rdx, %%rdx; jz 2f; dec %%rdx; lodsb;"
+		"1: dec %%rdx; js 2f; lodsb;"
 		"movq (%%rsp), %%rcx; movq 8(%%rsp), %%rdi; cld; repne scasb; jz 0b;"
 		"test %%r8, %%r8; jnz 2f; mov %%rsi, %%rbx; dec %%rbx;"
 		"add %%rdx, %%rsi; sub $2, %%rsi; not %%r8; jmp 0b;"
@@ -54,8 +54,14 @@ char	*ft_strtrim(char const *s1, char const *set)
 
 // int	main(void)
 // {
-// 	printf("%s\n", ft_strtrim("/?***ubuntu//software\t**\t", "\t"));
-// 	printf("%s\n", ft_strtrim("ubuntu//software", "ubntsofwear"));
-// 	printf("%s\n", ft_strtrim("ubuntusoftware", "ubntsofwear"));
+// 	char *str = ft_strtrim("/?***ubuntu//software\t**\t", "\t");
+// 	printf("%s\n", str);
+// 	free(str);
+// 	str = ft_strtrim("ubuntu//software", "ubntsofwear");
+// 	printf("%s\n", str);
+// 	free(str);
+// 	str= ft_strtrim("ubuntusoftware", "ubntsofwear");
+// 	printf("%s\n", str);
+// 	free(str);
 // 	return (0);
 // }
