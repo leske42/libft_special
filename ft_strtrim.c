@@ -6,7 +6,7 @@
 /*   By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 17:20:18 by mhuszar           #+#    #+#             */
-/*   Updated: 2026/02/20 21:36:48 by mhuszar          ###   ########.fr       */
+/*   Updated: 2026/02/20 22:32:36 by mhuszar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,24 +32,20 @@ char	*ft_strtrim(char const *s1, char const *set)
 {
 	char	*begin;
 	size_t	len;
-	char	*res;
 
 	__asm__ volatile (
-		"push %%rdi; push %%rcx; cld; xor %%r8, %%r8;"
+		"push %%rdi; push %%rcx; cld; xor %%r8, %%r8; inc %%rdx;"
 		"0: test %%r8, %%r8; jz 1f; std;"
 		"1: dec %%rdx; js 2f; lodsb;"
 		"movq (%%rsp), %%rcx; movq 8(%%rsp), %%rdi; cld; repne scasb; jz 0b;"
 		"test %%r8, %%r8; jnz 2f; mov %%rsi, %%rbx; dec %%rbx;"
 		"lea -2(%%rsi, %%rdx, 1), %%rsi; not %%r8; jmp 0b;"
-		"2: add $16, %%rsp; add $2, %%rdx; cld;"
+		"2: add $16, %%rsp; inc %%rdx; cld;"
 		: "=b" (begin), "=d" (len)
-		: "c" (ft_strlen(set)), "d" (ft_strlen(s1) + 1), "S" (s1), "D" (set)
+		: "c" (ft_strlen(set)), "d" (ft_strlen(s1)), "S" (s1), "D" (set)
 		: "rax", "cc", "flags", "r8"
 	);
-	res = malloc(len);
-	if (res)
-		ft_strlcpy(res, begin, len);
-	return (res);
+	return (ft_substr(s1, begin - s1, len));
 }
 
 // int	main(void)
@@ -60,7 +56,10 @@ char	*ft_strtrim(char const *s1, char const *set)
 // 	str = ft_strtrim("ubuntu//software", "ubntsofwear");
 // 	printf("%s\n", str);
 // 	free(str);
-// 	str= ft_strtrim("ubuntusoftware", "ubntsofwear");
+// 	str = ft_strtrim("ubuntusoftware", "ubntsofwear");
+// 	printf("%s\n", str);
+// 	free(str);
+// 	str = ft_strtrim("", "lol");
 // 	printf("%s\n", str);
 // 	free(str);
 // 	return (0);
