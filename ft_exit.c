@@ -6,25 +6,23 @@
 /*   By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 21:36:42 by mhuszar           #+#    #+#             */
-/*   Updated: 2024/04/08 21:52:52 by mhuszar          ###   ########.fr       */
+/*   Updated: 2026/02/20 22:40:08 by mhuszar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void ft_exit(int status)
+void	ft_exit(int status)
 {
-    __asm__ volatile (
-        "xorq %%rax, %%rax; xorq %%rdi, %%rdi;"
-        "movl %0, %%edi; movl $60, %%eax; movsx %%eax, %%rax;"
-        "syscall;"
-        :
-        : "r" (status)
-        : "rax", "rdi", "memory"
-    );
+	__asm__	volatile (
+			"mov $60, %%rax; syscall;"
+			:
+			: "D" (status)
+			: "rax"
+			);
 }
 
-int main(void)
-{
-    ft_exit(-1);
-    while (1)
-        ;
-}
+// int main(void)
+// {
+//     ft_exit(-1);
+//     while (1)
+//         ;
+// }
