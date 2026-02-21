@@ -3,94 +3,58 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhuszar <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:16:13 by mhuszar           #+#    #+#             */
-/*   Updated: 2023/09/05 16:16:16 by mhuszar          ###   ########.fr       */
+/*   Updated: 2026/02/21 19:23:28 by mhuszar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
-static int	digit_counter(long int y)
+static int	digit_counter(long int n)
 {
-	int	counter;
+	int	res;
 
-	counter = 1;
-	while (y > 9)
-	{
-		y = y / 10;
-		counter++;
-	}
-	return (counter);
+	__asm__ volatile (
+		"test %%rax, %%rax; jns 1f; inc %%rcx; neg %%rax;"
+		"1: xor %%rdx, %%rdx; inc %%rcx; div %%rsi; test %%rax, %%rax; jnz 1b;"
+		: "=c" (res)
+		: "a" (n), "S" (10), "c" (0)
+		: "cc", "flags", "rdx"
+	);
+	return (res);
 }
 
-static int	turning(char *result, int counter, int digits, long int n)
+static char	*fill_number(char *str, long int n)
 {
-	while (counter < digits)
-	{
-		result[counter] = '0' + (n % 10);
-		n = n / 10;
-		counter++;
-	}
-	return (counter);
-}
-
-static void	rev_str_tab(char *tab, int size, int negative)
-{
-	int	counter;
-	int	storage1;
-	int	storage2;
-	int	positive;
-	int	p_size;
-
-	counter = 0;
-	positive = 0;
-	p_size = size;
-	if (!negative)
-		positive = 1;
-	if ((size % 2 == 1) && negative)
-		p_size++;
-	while (counter < (p_size / 2))
-	{
-		storage1 = tab[counter];
-		storage2 = tab[size - counter - positive];
-		tab[counter] = storage2;
-		tab[size - counter - positive] = storage1;
-		counter++;
-	}
+	__asm__ volatile ("test %%rdi, %%rdi; jz 3f;"
+		"test %%rsi, %%rsi; jns 1f; neg %%rsi; stosb; dec %%rcx;"
+		"1: mov $10, %%r8; add %%rcx, %%rdi; xor %%rax, %%rax; std;"
+		"2: stosb; xchg %%rsi, %%rax; xor %%rdx, %%rdx; div %%r8;"
+		"xchg %%rsi, %%rax; lea 48(%%rdx), %%rax; dec %%rcx; jns 2b;"
+		"3: cld;"
+		:
+		: "D" (str), "a" (45), "S" (n), "c" (digit_counter(n))
+		: "r8", "cc", "flags", "memory"
+	);
+	return (str);
 }
 
 char	*ft_itoa(int n)
 {
-	char		*result;
-	int			counter;
-	int			negative;
-	int			digits;
-	long int	proxy;
-
-	counter = 0;
-	negative = 0;
-	proxy = (long int )n;
-	if (n < 0)
-	{
-		negative = 1;
-		proxy = proxy * -1;
-	}
-	digits = digit_counter(proxy);
-	result = (char *)malloc((digits + 1 + negative) * 1);
-	if (!result)
-		return (0);
-	counter = turning(result, counter, digits, proxy);
-	if (negative)
-		result[counter++] = '-';
-	result[counter] = '\0';
-	rev_str_tab(result, digits, negative);
-	return (result);
+	return (fill_number(malloc(digit_counter(n) + 1), n));
 }
-/*
-int	main(void)
-{
-	printf("%d\n", digit_counter(2147483648));
-	printf("%s", ft_itoa(-2123456));
-	return (0);
-}*/
+
+// int	main(void)
+// {
+// 	printf("%d\n", digit_counter(-123456789));
+// 	char *str = ft_itoa(-2147483648);
+// 	printf("%s\n", str);
+// 	ft_bzero(str, 11);
+// 	free(str);
+// 	str = ft_itoa(999999999);
+// 	printf("%s\n", str);
+// 	free(str);
+// 	return (0);
+// }
