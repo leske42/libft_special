@@ -6,7 +6,7 @@
 /*   By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:10:34 by mhuszar           #+#    #+#             */
-/*   Updated: 2026/02/23 16:26:11 by mhuszar          ###   ########.fr       */
+/*   Updated: 2026/02/23 19:48:01 by mhuszar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 		"test %%rcx, %%rcx; jz 2f; mov %%rdx, %%rdi; inc %%rax;"
 		"mov %%rax, %%rsi; dec %%r8; mov %%r8, %%rcx; jmp 1b;"
 		"2: xor %%rax, %%rax; 3:"
-		: "=a" (res)
-		: "S" (big), "D" (little), "c" (len)
-		: "rdx", "r8", "cc"
+		: "=a" (res), "+S" (big), "+D" (little), "+c" (len)
+		:
+		: "rdx", "r8", "cc", "memory"
 	);
 	return (res);
 }
@@ -54,6 +54,21 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 // 	c = ft_strnstr("hehiahehhehe", "hehe", 11);
 // 	printf("%s\n", c);
 // 	c = strnstr("hehiahehhehe", "hehe", 11);
+// 	printf("%s\n", c);
+
+// 	c = ft_strnstr("abc", "a", 0);
+// 	printf("%s\n", c);
+// 	c = strnstr("abc", "a", 0);
+// 	printf("%s\n", c);
+
+// 	c = ft_strnstr("abc", "c", 2);
+// 	printf("%s\n", c);
+// 	c = strnstr("abc", "c", 2);
+// 	printf("%s\n", c);
+
+// 	c = ft_strnstr("abc", "", 2);
+// 	printf("%s\n", c);
+// 	c = strnstr("abc", "", 2);
 // 	printf("%s\n", c);
 // 	return (0);
 // }

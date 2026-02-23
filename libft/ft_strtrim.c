@@ -6,7 +6,7 @@
 /*   By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 17:20:18 by mhuszar           #+#    #+#             */
-/*   Updated: 2026/02/20 22:32:36 by mhuszar          ###   ########.fr       */
+/*   Updated: 2026/02/23 19:58:47 by mhuszar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,16 @@ char	*ft_strtrim(char const *s1, char const *set)
 	size_t	len;
 
 	__asm__ volatile (
-		"push %%rdi; push %%rcx; cld; xor %%r8, %%r8; inc %%rdx;"
+		"push %%rsi; push %%rdi; push %%rcx; cld; xor %%r8, %%r8; inc %%rdx;"
 		"0: test %%r8, %%r8; jz 1f; std;"
 		"1: dec %%rdx; js 2f; lodsb;"
 		"movq (%%rsp), %%rcx; movq 8(%%rsp), %%rdi; cld; repne scasb; jz 0b;"
 		"test %%r8, %%r8; jnz 2f; mov %%rsi, %%rbx; dec %%rbx;"
 		"lea -2(%%rsi, %%rdx, 1), %%rsi; not %%r8; jmp 0b;"
-		"2: add $16, %%rsp; inc %%rdx; cld;"
-		: "=b" (begin), "=d" (len)
-		: "c" (ft_strlen(set)), "d" (ft_strlen(s1)), "S" (s1), "D" (set)
-		: "rax", "cc", "flags", "r8"
+		"2: pop %%rcx; pop %%rdi; pop %%rsi; inc %%rdx; cld;"
+		: "=b" (begin), "=d" (len), "+D" (set), "+S" (s1)
+		: "c" (ft_strlen(set)), "1" (ft_strlen(s1))
+		: "rax", "cc", "r8", "memory"
 	);
 	return (ft_substr(s1, begin - s1, len));
 }

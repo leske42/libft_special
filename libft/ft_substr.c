@@ -6,7 +6,7 @@
 /*   By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 13:24:32 by mhuszar           #+#    #+#             */
-/*   Updated: 2026/02/19 20:28:02 by mhuszar          ###   ########.fr       */
+/*   Updated: 2026/02/23 20:05:08 by mhuszar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	size_t	dest_size;
 	char	*sub_str;
 
-	__asm__ volatile (
+	__asm__ volatile ("mov %2, %%rcx;"
 		"mov %%rdx, %%rax; add %%rsi, %%rdx; cmp %%rcx, %%rdx; jl 1f;"
 		"sub %%rsi, %%rcx; mov %%rcx, %%rax; 1: inc %%rax;"
 		"test %%rax, %%rax; jns 2f; xor %%rax, %%rax; 2:"
-		: "=a" (dest_size)
-		: "c" (ft_strlen(s)), "S" (start), "d" (len)
-		:
+		: "=a" (dest_size), "+d" (len)
+		: "r" (ft_strlen(s)), "S" (start)
+		: "rcx", "cc"
 	);
 	if (!dest_size)
 		return (NULL);
