@@ -6,7 +6,7 @@
 /*   By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:19:51 by mhuszar           #+#    #+#             */
-/*   Updated: 2026/02/19 18:43:53 by mhuszar          ###   ########.fr       */
+/*   Updated: 2026/02/23 19:27:03 by mhuszar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void	ft_putstr_fd(char *s, int fd)
 		"repne scasb; neg %%rcx; dec %%rcx; sub %%rcx, %%rdi;"
 		"movq $1, %%rax; mov %%rdi, %%rsi; mov %%edx, %%edi;"
 		"mov %%rcx, %%rdx; syscall;"
+		: "+D" (s), "+d" (fd)
 		:
-		: "D" (s), "d" (fd)
-		: "rax", "rcx", "rsi"
+		: "rax", "rcx", "rsi", "memory", "r11", "cc"
 	);
 }
 

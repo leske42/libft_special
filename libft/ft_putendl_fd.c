@@ -6,7 +6,7 @@
 /*   By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:32:03 by mhuszar           #+#    #+#             */
-/*   Updated: 2026/02/15 17:19:27 by mhuszar          ###   ########.fr       */
+/*   Updated: 2026/02/23 19:24:08 by mhuszar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ void	ft_putendl_fd(char *s, int fd)
 		"syscall;"
 		"pop %%rdi; pushq $10; mov %%rsp, %%rsi; movq $1, %%rdx;"
 		"movq $1, %%rax; syscall; pop %%rax;"
+		: "+D" (s), "+d" (fd)
 		:
-		: "D" (s), "d" (fd)
-		: "rax", "rcx", "rsi", "memory"
+		: "rax", "rcx", "rsi", "memory", "cc", "r11"
 	);
 }
 
