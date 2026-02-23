@@ -6,18 +6,19 @@
 /*   By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 21:36:42 by mhuszar           #+#    #+#             */
-/*   Updated: 2026/02/20 22:40:08 by mhuszar          ###   ########.fr       */
+/*   Updated: 2026/02/23 18:09:26 by mhuszar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	ft_exit(int status)
+void	__attribute__((noreturn)) ft_exit(int status)
 {
 	__asm__	volatile (
 			"mov $60, %%rax; syscall;"
 			:
 			: "D" (status)
-			: "rax"
+			: "rax", "rcx", "r11", "cc", "memory"
 			);
+	__builtin_unreachable();
 }
 
 // int main(void)

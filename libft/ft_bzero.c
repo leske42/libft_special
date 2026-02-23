@@ -6,7 +6,7 @@
 /*   By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 13:45:48 by mhuszar           #+#    #+#             */
-/*   Updated: 2026/01/11 16:38:22 by mhuszar          ###   ########.fr       */
+/*   Updated: 2026/02/23 17:57:15 by mhuszar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ void	__attribute__((noinline))
 		"4: shr $2, %%rcx; rep stosl; jmp 1f;"
 		"2: shr $1, %%rcx; rep stosw;"
 		"1:"
+		: "+D"(s), "+c"(n)
 		:
-		: "D"(s), "c"(n)
-		: "memory", "cc", "flags", "rax"
+		: "memory", "cc", "rax"
 	);
 }
 

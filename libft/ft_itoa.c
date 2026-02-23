@@ -6,7 +6,7 @@
 /*   By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:16:13 by mhuszar           #+#    #+#             */
-/*   Updated: 2026/02/21 19:44:58 by mhuszar          ###   ########.fr       */
+/*   Updated: 2026/02/23 18:39:32 by mhuszar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,26 @@ static int	digit_counter(long int n)
 	int	res;
 
 	__asm__ volatile (
-		"test %%rax, %%rax; jns 1f; inc %%rcx; neg %%rax;"
+		"mov $10, %%rsi; test %%rax, %%rax; jns 1f; inc %%rcx; neg %%rax;"
 		"1: xor %%rdx, %%rdx; inc %%rcx; div %%rsi; test %%rax, %%rax; jnz 1b;"
-		: "=c" (res)
-		: "a" (n), "S" (10), "c" (0)
-		: "cc", "flags", "rdx"
+		: "=c" (res), "+a" (n)
+		: "0" (0)
+		: "cc", "rdx", "rsi"
 	);
 	return (res);
 }
 
 static char	*fill_number(char *str, long int n)
 {
-	__asm__ volatile ("test %%rdi, %%rdi; jz 3f;"
+	__asm__ volatile ("push %%rdi; test %%rdi, %%rdi; jz 3f; movslq %3, %%rcx;"
 		"test %%rsi, %%rsi; jns 1f; neg %%rsi; stosb; dec %%rcx;"
 		"1: mov $10, %%r8; add %%rcx, %%rdi; xor %%rax, %%rax; std;"
 		"2: stosb; xchg %%rsi, %%rax; xor %%rdx, %%rdx; div %%r8;"
 		"xchg %%rsi, %%rax; lea 48(%%rdx), %%rax; dec %%rcx; jns 2b;"
-		"3: cld;"
-		:
-		: "D" (str), "a" (45), "S" (n), "c" (digit_counter(n))
-		: "r8", "cc", "flags", "memory"
+		"3: cld; pop %%rdi; mov $45, %%rax;"
+		: "+D" (str), "+S" (n)
+		: "a" (45), "r" (digit_counter(n))
+		: "r8", "cc", "memory", "rdx", "rcx"
 	);
 	return (str);
 }

@@ -6,7 +6,7 @@
 /*   By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 17:43:52 by mhuszar           #+#    #+#             */
-/*   Updated: 2026/02/19 18:14:29 by mhuszar          ###   ########.fr       */
+/*   Updated: 2026/02/23 18:10:19 by mhuszar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_isalnum(int c)
 	__asm__ volatile (
 		"or %%rcx, %%rdx;"
 		: "=d" (result)
-		: "c" (ft_isdigit(c)), "d" (ft_isalpha(c))
+		: "c" (ft_isdigit(c)), "0" (ft_isalpha(c))
 		:
 	);
 	return (result);
