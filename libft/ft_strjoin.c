@@ -3,44 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhuszar <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 15:52:05 by mhuszar           #+#    #+#             */
-/*   Updated: 2023/09/11 15:52:07 by mhuszar          ###   ########.fr       */
+/*   Updated: 2026/02/23 17:31:07 by mhuszar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	int		ctr1;
-	int		ctr2;
 	char	*new_str;
 
-	ctr1 = ft_strlen((char *)s1);
-	ctr2 = ft_strlen((char *)s2);
-	new_str = (char *)malloc((ctr1 + ctr2 + 1) * 1);
-	if (!new_str)
-		return (0);
-	ctr1 = 0;
-	ctr2 = 0;
-	while (s1[ctr1])
-	{
-		new_str[ctr1] = s1[ctr1];
-		ctr1++;
-	}
-	while (s2[ctr2])
-	{
-		new_str[ctr1] = s2[ctr2];
-		ctr1++;
-		ctr2++;
-	}
-	new_str[ctr1] = '\0';
+	new_str = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	__asm__ volatile ("test %%rdi, %%rdi; jz 7f;"
+		"mov %%rdi, %%r8; mov %4, %%rcx; rep movsb;"
+		"mov %%rax, %%rsi; mov %%rdx, %%rcx; rep movsb; movb $0, (%%rdi);"
+		"mov %%r8, %%rdi; mov %%r9, %%rcx; 7:"
+		: "+S" (s1), "+D" (new_str)
+		: "a" (s2), "d" (ft_strlen(s2)), "r" (ft_strlen(s1))
+		: "r8", "rcx"
+	);
 	return (new_str);
 }
-/*
-int	main(void)
-{
-	printf("%s", ft_strjoin("ubuntu ", "software"));
-	return (0);
-}*/
+
+// int	main(void)
+// {
+// 	char *str = ft_strjoin("ubuntu ", "software");
+// 	printf("%s", str);
+// 	free(str);
+// 	return (0);
+// }

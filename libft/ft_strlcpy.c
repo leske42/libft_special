@@ -6,14 +6,12 @@
 /*   By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 15:38:49 by mhuszar           #+#    #+#             */
-/*   Updated: 2026/02/19 19:58:46 by mhuszar          ###   ########.fr       */
+/*   Updated: 2026/02/23 16:36:00 by mhuszar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-//i remember he main issue with these functions not to make them work,
-//but to provide always the stupid return value specified
 size_t	__attribute__((noinline))
 	ft_strlcpy(char *dst, const char *src, size_t size)
 {
