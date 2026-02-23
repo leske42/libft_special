@@ -14,7 +14,7 @@
 
 int	ft_isprint(int c)
 {
-	int result;
+	int	result;
 
 	__asm__ volatile (
 		"cmp $32, %1;"

@@ -14,7 +14,7 @@
 
 int	ft_isascii(int c)
 {
-	int result;
+	int	result;
 
 	__asm__ volatile (
 		"cmp $0, %1;"

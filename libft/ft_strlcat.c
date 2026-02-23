@@ -6,7 +6,7 @@
 /*   By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 20:56:38 by mhuszar           #+#    #+#             */
-/*   Updated: 2026/02/23 19:37:33 by mhuszar          ###   ########.fr       */
+/*   Updated: 2026/02/23 20:06:30 by mhuszar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 		"cmp %%rcx, %%rdx; jg 6f; add %%rdx, %%rax; dec %%rcx;"
 		"sub %%rdx, %%rcx; add %%rdx, %%rdi; rep movsb; jmp 7f;"
 		"6: add %%rcx, %%rax; 7:"
-		: "=a" (res), "+D" (dst), "+S" (src), "+c" (size) 
+		: "=a" (res), "+D" (dst), "+S" (src), "+c" (size)
 		: "r" (ft_strlen(src)), "d" (ft_strlen(dst))
 		: "cc", "memory"
 	);

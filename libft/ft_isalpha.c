@@ -14,7 +14,7 @@
 
 int	ft_isalpha(int c)
 {
-	int result;
+	int	result;
 
 	__asm__ volatile (
 		"cmp $65, %1;"

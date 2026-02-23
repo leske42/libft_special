@@ -33,25 +33,6 @@ void	ft_putnbr_fd(int nb, int fd)
 	);
 }
 
-/*int	ft_putnbr_fd(int nb, int fd)
-{
-	__asm__ volatile (
-		"movl %1, %%ebx;"
-		//"cmp $-2147483648, %0; jg 1f;"
-		"movq $45, %%rdi; movl %%ebx, %%esi; movq %3, %%rax; call *%%rax;"
-		"movq $50, %%rdi; movl %%ebx, %%esi; movq %3, %%rax; call *%%rax;"
-		"movq $97, %%rdi; movl %%ebx, %%esi; movq %3, %%rax; call *%%rax;"
-		"movq $104, %%rdi; movl %%ebx, %%esi; movq %3, %%rax; call *%%rax;"
-		"movq $10, %%rdi; movl %%ebx, %%esi; movq %3, %%rax; call *%%rax;"
-		//"movq $147483648, %%rdi; movl %%ebx, %%esi; movq %2, %%rax; call *%%rax;"
-		"1:"
-		
-		:
-		: "r" (nb), "r" (fd), "r" (ft_putnbr_ft), "r" (ft_putchar_fd)
-		: "memory", "rdi", "rsi", "rax", "rbx"
-	);
-	return (fd);
-}*/
 /*
 int	main(void)
 {
