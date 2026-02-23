@@ -6,7 +6,7 @@
 /*   By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 13:57:24 by mhuszar           #+#    #+#             */
-/*   Updated: 2026/01/10 16:04:42 by mhuszar          ###   ########.fr       */
+/*   Updated: 2026/02/23 18:51:40 by mhuszar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,20 @@
 
 //a C version in general would need to cast dst and src to integer type
 //in order not to violate provenance.
-void	__attribute__((noinline))
-	*ft_memmove(void *dest, const void *src, size_t n)
+void	*ft_memmove(void *dest, const void *src, size_t n)
 {
 	__asm__ volatile (
-		"mov %%rdi, %%rax;"
-		"cld; cmp %%rsi, %%rdi; jl 1f; std;"
+		"mov %%rdi, %%rax; cld;"
+		"cmp %%rsi, %%rdi; jl 1f; std;"
 		"lea -1(%%rsi, %%rcx, 1), %%rsi;"
 		"lea -1(%%rdi, %%rcx, 1), %%rdi;"
-		"1: rep movsb"
-		: "=a" (dest)
-		: "S"(src), "D"(dest), "c"(n)
-		: "memory", "cc", "flags"
+		"1: rep movsb; mov %%rax, %%rdi; cld;"
+		: "+D" (dest), "+S"(src), "+c"(n)
+		:
+		: "memory", "cc", "rax"
 	);
 	return (dest);
 }
-//Saving dst to a tmp ONLY covers for the O3 edge case
 
 // #include <string.h>
 // #include<stdio.h>

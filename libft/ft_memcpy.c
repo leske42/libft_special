@@ -6,20 +6,19 @@
 /*   By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 14:43:05 by mhuszar           #+#    #+#             */
-/*   Updated: 2026/01/06 13:20:58 by mhuszar          ###   ########.fr       */
+/*   Updated: 2026/02/23 18:48:28 by mhuszar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	__attribute__((noinline))
-	*ft_memcpy(void *dest, const void *src, size_t n)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
 	__asm__ volatile (
-		"cld; rep movsb"
-		: "+D" (dest)
-		: "S"(src), "c"(n)
-		: "memory", "cc", "flags"
+		"mov %%rax, %%rcx; cld; rep movsb"
+		: "+D" (dest), "+S"(src)
+		: "a" (n)
+		: "memory", "cc", "rcx"
 	);
 	return (dest - n);
 }

@@ -6,7 +6,7 @@
 /*   By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:41:59 by mhuszar           #+#    #+#             */
-/*   Updated: 2026/01/11 15:54:19 by mhuszar          ###   ########.fr       */
+/*   Updated: 2026/02/23 18:41:38 by mhuszar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ void	*ft_memchr(const void *s, int c, size_t n)
 		"xor %%rsi, %%rsi;"
 		"cmpb -1(%%rdi), %%al; jne 1f;"
 		"lea -1(%%rdi, %%rsi, 1), %%rsi; 1:"
-		: "=S" (result)
-		: "D" (s), "a" (c), "c" (n)
-		: "cc", "flags"
+		: "=S" (result), "+D" (s), "+a" (c), "+c" (n)
+		:
+		: "cc", "flags", "memory"
 	);
 	return (result);
 }
