@@ -6,7 +6,7 @@
 /*   By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:02:25 by mhuszar           #+#    #+#             */
-/*   Updated: 2026/02/20 17:59:05 by mhuszar          ###   ########.fr       */
+/*   Updated: 2026/02/23 19:32:36 by mhuszar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ char	*ft_strchr(const char *s, int c)
 	void	*result;
 
 	__asm__ volatile (
-		"cld; repne scasb;"
+		"mov %3, %%rcx; cld; repne scasb;"
 		"xor %%rsi, %%rsi;"
 		"cmpb -1(%%rdi), %%al; jne 1f;"
 		"lea -1(%%rdi, %%rsi, 1), %%rsi; 1:"
-		: "=S" (result)
-		: "D" (s), "a" (c), "c" (ft_strlen(s))
-		: "cc", "flags"
+		: "=S" (result), "+D" (s)
+		: "a" (c), "r" (ft_strlen(s))
+		: "cc", "rcx", "memory"
 	);
 	return (result);
 }

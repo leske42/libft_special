@@ -6,7 +6,7 @@
 /*   By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/10 16:53:13 by mhuszar           #+#    #+#             */
-/*   Updated: 2026/02/21 13:59:43 by mhuszar          ###   ########.fr       */
+/*   Updated: 2026/02/23 19:30:01 by mhuszar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ static size_t	count_words(const char *str, char c)
 	__asm__ volatile (
 		"1: lodsb; test %%al, %%al; jz 3f; cmp %%al, %%dl; jz 1b; inc %%rcx;"
 		"2: lodsb; test %%al, %%al; jz 3f; cmp %%al, %%dl; jnz 2b; jmp 1b; 3:"
-		: "=c" (words)
-		: "S" (str), "d" (c), "c" (0)
-		: "rax", "cc", "flags"
+		: "=c" (words), "+S" (str)
+		: "d" (c), "0" (0)
+		: "rax", "cc", "memory"
 	);
 	return (words);
 }
@@ -38,7 +38,7 @@ static size_t	reposition(const char **str, char c)
 		"2: inc %%rcx; lodsb; test %%al, %%al; jz 3f; cmp %%al, %%dl; jnz 2b;"
 		"3: xor %%rax, %%rax; dec %%rcx; cmovs %%rax, %%rcx;"
 		: "=c" (word_len), "+D" (str)
-		: "d" (c), "c" (0)
+		: "d" (c), "0" (0)
 		: "rsi", "rax", "cc", "flags"
 	);
 	return (word_len);

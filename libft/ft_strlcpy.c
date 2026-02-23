@@ -6,14 +6,13 @@
 /*   By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 15:38:49 by mhuszar           #+#    #+#             */
-/*   Updated: 2026/02/23 16:36:00 by mhuszar          ###   ########.fr       */
+/*   Updated: 2026/02/23 19:42:34 by mhuszar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	__attribute__((noinline))
-	ft_strlcpy(char *dst, const char *src, size_t size)
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
 	size_t	res;
 
@@ -25,9 +24,9 @@ size_t	__attribute__((noinline))
 		"1: movb $0, (%%rdi); pop %%rsi;"
 		"2: mov %%rsi, %%rdi; mov $-1, %%rcx; xor %%rax, %%rax;"
 		"repne scasb; neg %%rcx; sub $2, %%rcx;"
-		: "=c" (res)
-		: "D" (dst), "S"(src), "c"(size)
-		: "memory", "cc", "flags"
+		: "=c" (res), "+D" (dst), "+S"(src)
+		: "0" (size)
+		: "memory", "cc", "rax"
 	);
 	return (res);
 }
@@ -35,15 +34,20 @@ size_t	__attribute__((noinline))
 
 // #include<stdio.h>
 // #include<string.h>
+// //requires lbsd
+// size_t strlcpy(char *dst, const char *src, size_t size);
 // int	main(void)
 // {
 // 	char	src[] = "hilalala";
 // 	char	dest[] = "ubuntusoftware";
+// 	char	dest2[] = "ubuntusoftware";
 // 	unsigned int n = 6;
 
 // 	//printf("%d\n", ft_strlcpy(dest, src, n));
-// 	ft_strlcpy(dest, src, n);
-// 	printf("%s\n", dest);
+// 	// ft_strlcpy(dest, src, n);
 // 	printf("%zu\n", ft_strlcpy(dest, src, n));
+// 	printf("%s\n", dest);
+// 	printf("%zu\n", strlcpy(dest2, src, n));
+// 	printf("%s\n", dest2);
 // 	return (0);
 // }
