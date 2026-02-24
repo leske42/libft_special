@@ -6,7 +6,7 @@
 /*   By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:02:25 by mhuszar           #+#    #+#             */
-/*   Updated: 2026/02/23 19:32:36 by mhuszar          ###   ########.fr       */
+/*   Updated: 2026/02/24 23:17:19 by mhuszar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,8 @@ char	*ft_strchr(const char *s, int c)
 	void	*result;
 
 	__asm__ volatile (
-		"mov %3, %%rcx; cld; repne scasb;"
-		"xor %%rsi, %%rsi;"
-		"cmpb -1(%%rdi), %%al; jne 1f;"
+		"mov %3, %%rcx; inc %%rcx; cld; repne scasb;"
+		"xor %%rsi, %%rsi; cmpb -1(%%rdi), %%al; jne 1f;"
 		"lea -1(%%rdi, %%rsi, 1), %%rsi; 1:"
 		: "=S" (result), "+D" (s)
 		: "a" (c), "r" (ft_strlen(s))
@@ -37,8 +36,8 @@ char	*ft_strchr(const char *s, int c)
 // 	int n = 110;
 // 	alma = "alma";
 // 	printf("%s\n", ft_strchr(alma, l));
-// 	char s[] = "tripouille";
-// 	printf("%s\n", ft_strchr(s, 'i' + 256));
-// 	printf("%s", strchr(s, 'i' + 256));
+// 	char *hehe = "hehehehe\0hehehe";
+// 	printf("%s\n", ft_strchr(hehe, 'a'));
+// 	printf("%s\n", strchr(hehe, 'a'));
 // 	return (0);
 // }
