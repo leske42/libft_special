@@ -6,7 +6,7 @@
 /*   By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 17:54:33 by mhuszar           #+#    #+#             */
-/*   Updated: 2026/02/23 17:56:31 by mhuszar          ###   ########.fr       */
+/*   Updated: 2026/02/24 23:22:09 by mhuszar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_atoi(const char *str)
 
 	__asm__ volatile ("xor %%r9, %%r9; xor %%rcx, %%rcx; xor %%rdx, %%rdx;"
 		"1: movb (%%rsi), %%cl; inc %%rsi; cmpb $32, %%cl; je 1b;"
-		"cmpb $9, %%cl; jl 7f; cmpb $13, %%cl; jl 1b;"
+		"cmpb $9, %%cl; jl 7f; cmpb $14, %%cl; jl 1b;"
 		"2: cmpb $'-', %%cl; jne 3f; not %%r9; movb $'+', %%cl;"
 		"3: cmpb $'+', %%cl; jne 5f;"
 		"4: movb (%%rsi), %%cl; inc %%rsi;"
