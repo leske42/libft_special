@@ -6,48 +6,37 @@
 /*   By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 14:22:15 by mhuszar           #+#    #+#             */
-/*   Updated: 2024/02/18 10:51:02 by mhuszar          ###   ########.fr       */
+/*   Updated: 2026/02/24 21:14:10 by mhuszar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+//the fun question is - does moulinette use valgrind?
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
 	int	result;
 
-	__asm__ volatile ("xorq %%rax, %%rax;"
-		"xorq %%rbx, %%rbx;"
-		"1:"
-		"dec %3;"
-		"js 2f;"
-		"movb (%1), %%al;"
-		"movb (%2), %%bl;"
-		"cmpb  %%al, %%bl; jne 2f;"
-		"testb %%al, %%al; jz 2f;"
-		"testb %%bl, %%bl; jz 2f;"
-		"inc %1;"
-		"inc %2;"
-		"jmp 1b;"
-		"2:"
-		"subb %%bl, %%al;"
-		"movsx %%al, %%eax;"
-		"movl %%eax, %0;"
-		: "=r" (result)
-		: "r" (s1), "r" (s2), "r" (n)
-		: "rax", "rbx", "cc"
+	__asm__ volatile ("xor %%rdx, %%rdx;"
+		"cld; test %%rcx, %%rcx; jz 3f; 1: cmpsb; dec %%rcx;"
+		"movb -1(%%rsi), %%al; movb -1(%%rdi), %%dl;"
+		"cmp %%al, %%dl; jnz 2f; test %%rcx, %%rcx; jz 2f;"
+		"cmp $0, %%al; jz 2f; cmp $0, %%dl; jz 2f; jmp 1b;"
+		"2: sub %%edx, %%eax; 3:"
+		: "=a" (result), "+S" (s1), "+D" (s2), "+c" (n)
+		: "0" (0)
+		: "cc", "memory", "rdx"
 	);
 	return (result);
 }
 
-/*
-#include<unistd.h>
-#include<string.h>
-#include<stdio.h>
-int	main(void)
-{
-	printf("%d\n", strncmp("apple", "apxle", 0));
-	//write(1, "\n", 1);
-	printf("%d\n", ft_strncmp("apple", "apxle", 0));
-	return (0);
-}*/
+// #include<unistd.h>
+// #include<string.h>
+// #include<stdio.h>
+// int	main(void)
+// {
+// 	printf("%d\n", strncmp("apple", "apxle", 300));
+// 	//write(1, "\n", 1);
+// 	printf("%d\n", ft_strncmp("apple", "apxle", 300));
+// 	return (0);
+// }
