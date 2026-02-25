@@ -6,7 +6,7 @@
 /*   By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 11:07:19 by mhuszar           #+#    #+#             */
-/*   Updated: 2024/02/18 19:31:27 by mhuszar          ###   ########.fr       */
+/*   Updated: 2026/02/25 23:32:56 by mhuszar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,8 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stddef.h>
-# include <stdio.h>
-# include <stdarg.h>
-# include <limits.h>
 # include <stdint.h>
-# include <fcntl.h>
 
-//original libft
 int		ft_atoi(const char *str);
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t nmemb, size_t size);
@@ -57,44 +52,5 @@ char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		ft_tolower(int c);
 int		ft_toupper(int c);
-
-//get_next_line
-char	*get_next_line(int fd);
-char	*ft_gnljoin(char *s1, char *s2);
-
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1000000
-# endif
-
-//printf and subfunctions
-int		ft_printf(const char *tipus, ...);
-void	ft_putchar(char c);
-int		print_i(int i);
-int		print_x(unsigned int x);
-int		print_xup(unsigned int x);
-int		print_c(char c);
-int		print_s(char *str);
-int		print_p(void *ptr);
-int		print_u(unsigned int u);
-
-//hotrace and utils
-# ifndef HASHTABLE_SIZE
-#  define HASHTABLE_SIZE 10000000
-# endif
-
-typedef struct s_keyvalue
-{
-	char				*key;
-	char				*val;
-	size_t				hash2;
-	struct s_keyvalue	*next;
-}				t_keyvalue;
-
-int		read_data(t_keyvalue **hashtable);
-int		read_search_key(t_keyvalue **hashtable);
-size_t	get_hash(char *keyvalue);
-size_t	get_hash2(char *keyvalue);
-void	free_hashtable(t_keyvalue **hashtable);
-void	free_list(t_keyvalue *list);
 
 #endif
