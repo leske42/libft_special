@@ -6,7 +6,7 @@
 /*   By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 14:41:11 by mhuszar           #+#    #+#             */
-/*   Updated: 2026/02/04 21:21:12 by mhuszar          ###   ########.fr       */
+/*   Updated: 2026/02/27 16:49:11 by mhuszar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,8 @@ int main(void)
 
 #ifdef BONUS
     /*ATOI BASE TEST*/
-    char *test_str = "  \n      \t         +17321ll";
-    printf("The int value for %s is: %d\n\n", test_str, ft_atoi_base(test_str, "0123456789"));
+    char *test_str = "  \n      \t         +BHDCBll";
+    printf("The int value for %s is: %d\n\n", test_str, ft_atoi_base(test_str, "ABCDEFGHIJ"));
     char array[100] = "-10";
     printf("The int value for %s is: %d\n\n", array, ft_atoi_base(array, "01"));
 

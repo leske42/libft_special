@@ -7,7 +7,6 @@ ft_atoi_base:
     push r12
     push r13
     push r14
-    cld
     xor rbx, rbx
     mov r12, rdi
     mov r13, rsi
@@ -16,6 +15,7 @@ ft_atoi_base:
     call ft_strlen
     add rsp, 8
     mov r14, rax
+    cld
     jmp .validate_base
 .loop:
     cmp r8, r12
@@ -44,10 +44,10 @@ ft_atoi_base:
     ret
 
 .validate_base:
+    sub rsp, 128
     xor rax, rax
     test r14, r14
     jz .error
-    sub rsp, 128
     mov rcx, 16
     mov rdi, rsp
     rep stosq
@@ -95,10 +95,12 @@ ft_atoi_base:
     mov r12, rsi
 .numbers:
     lodsb
-    cmp al, 48
-    jl .survey_done
-    cmp al, 57
-    jg .survey_done
+    mov rdi, r13
+    mov rcx, r14
+    inc rcx
+    repne scasb
+    test rcx, rcx
+    jz .survey_done
     inc r8
     jmp .numbers
 .survey_done:
