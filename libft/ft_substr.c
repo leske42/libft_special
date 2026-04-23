@@ -18,7 +18,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	char	*sub_str;
 
 	__asm__ volatile ("mov %2, %%rcx;"
-		"mov %%rdx, %%rax; add %%rsi, %%rdx; cmp %%rcx, %%rdx; jl 1f;"
+		"mov %%rdx, %%rax; add %%rsi, %%rdx; cmp %%rcx, %%rdx; jb 1f;"
 		"sub %%rsi, %%rcx; mov %%rcx, %%rax; 1: inc %%rax;"
 		"test %%rax, %%rax; jns 2f; xor %%rax, %%rax; 2:"
 		: "=a" (dest_size), "+d" (len)
@@ -33,17 +33,19 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (sub_str);
 }
 
-// int	main(void)
-// {
-// 	char *str;
-// 	str = ft_substr("ubuntusoftware", 6, 4);
-// 	printf("%s\n", str);
-// 	free(str);
-// 	str = ft_substr("hola", 4294967295, 0);
-// 	printf("%s\n", str);
-// 	free(str);
-// 	str = ft_substr("hola", 2, 30);
-// 	printf("%s\n", str);
-// 	free(str);
-// 	return (0);
-// }
+/*
+#include <stdio.h>
+int	main(void)
+{
+	char *str;
+	str = ft_substr("ubuntusoftware", 6, 4);
+	printf("%s\n", str);
+	free(str);
+	str = ft_substr("soup", 4294967295, 0);
+	printf("%s\n", str);
+	free(str);
+	str = ft_substr("soup", 2, 30);
+	printf("%s\n", str);
+	free(str);
+	return (0);
+}*/
