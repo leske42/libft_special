@@ -18,7 +18,7 @@ void	ft_putstr_fd(char *s, int fd)
 		"cld; xor %%rax, %%rax; mov $-1, %%rcx;"
 		"repne scasb; neg %%rcx; dec %%rcx; sub %%rcx, %%rdi;"
 		"movq $1, %%rax; mov %%rdi, %%rsi; mov %%edx, %%edi;"
-		"mov %%rcx, %%rdx; syscall;"
+		"lea -1(%%rcx), %%rdx; syscall;"
 		: "+D" (s), "+d" (fd)
 		:
 		: "rax", "rcx", "rsi", "memory", "r11", "cc"

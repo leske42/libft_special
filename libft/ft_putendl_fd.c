@@ -17,8 +17,8 @@ void	ft_putendl_fd(char *s, int fd)
 	__asm__ volatile (
 		"cld; xor %%rax, %%rax; mov $-1, %%rcx;"
 		"repne scasb; neg %%rcx; dec %%rcx; sub %%rcx, %%rdi; push %%rdx;"
-		"movq $1, %%rax; mov %%rdi, %%rsi; mov %%edx, %%edi; mov %%rcx, %%rdx;"
-		"syscall;"
+		"movq $1, %%rax; mov %%rdi, %%rsi; mov %%edx, %%edi;"
+		"lea -1(%%rcx), %%rdx; syscall;"
 		"pop %%rdi; pushq $10; mov %%rsp, %%rsi; movq $1, %%rdx;"
 		"movq $1, %%rax; syscall; pop %%rax;"
 		: "+D" (s), "+d" (fd)
