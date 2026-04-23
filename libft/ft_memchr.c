@@ -12,13 +12,16 @@
 
 #include "libft.h"
 
+//I depend on `n` being given truthfully. On a `n` that exceeds mem area
+//len, function will not stop.
 void	*ft_memchr(const void *s, int c, size_t n)
 {
 	void	*result;
 
 	__asm__ volatile (
-		"cld; repne scasb;"
 		"xor %%rsi, %%rsi;"
+		"test %%rcx, %%rcx; jz 1f;"
+		"cld; repne scasb;"
 		"cmpb -1(%%rdi), %%al; jne 1f;"
 		"lea -1(%%rdi, %%rsi, 1), %%rsi; 1:"
 		: "=S" (result), "+D" (s), "+a" (c), "+c" (n)
