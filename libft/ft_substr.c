@@ -26,7 +26,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		: "rcx", "cc"
 	);
 	if (!dest_size)
-		return (NULL);
+		return (ft_strdup(""));
 	sub_str = malloc(dest_size);
 	if (sub_str)
 		ft_strlcpy(sub_str, s + start, dest_size);
