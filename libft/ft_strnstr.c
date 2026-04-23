@@ -16,14 +16,15 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
 	char	*res;
 
-	__asm__ volatile ("mov %%rdi, %%rdx; inc %%rcx; cmovz %%rax, %%rcx;"
-		"mov %%rsi, %%rax; mov %%rcx, %%r8; cmpb $0, (%%rdi); jz 3f; cld;"
+	__asm__ volatile (
+		"mov %%rdi, %%rdx; cmp %%rax, %%rcx; cmova %%rax, %%rcx; inc %%rcx;"
+		"cld; mov %%rsi, %%rax; mov %%rcx, %%r8; cmpb $0, (%%rdi); jz 3f;"
 		"1: repe cmpsb; cmpb $0, -1(%%rdi); jz 3f; cmpb $0, -1(%%rsi); jz 2f;"
 		"test %%rcx, %%rcx; jz 2f; mov %%rdx, %%rdi; inc %%rax;"
 		"mov %%rax, %%rsi; dec %%r8; mov %%r8, %%rcx; jmp 1b;"
 		"2: xor %%rax, %%rax; 3:"
 		: "=a" (res), "+S" (big), "+D" (little), "+c" (len)
-		: "0" (len)
+		: "0" (ft_strlen(big))
 		: "rdx", "r8", "cc", "memory"
 	);
 	return (res);
