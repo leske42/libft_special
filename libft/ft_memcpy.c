@@ -12,6 +12,7 @@
 
 #include "libft.h"
 
+//The behavior is undefined if invalid pointers (like NULL) are passed.
 void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
 	__asm__ volatile (
@@ -22,10 +23,7 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 	);
 	return (dest - n);
 }
-/*arguably the issue of not saving to tmp ONLY arises with O3 AND using
-a main in separate file. BUT it cannot be solved with (dest - n) for any
-case when the issue is not present UNLESS moving D to + section.
-now does n not aguably have the same issue??*/
+/*keeping clobber lists clean is important*/
 
 // #include<string.h>
 // int	main(void)

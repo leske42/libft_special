@@ -14,6 +14,7 @@
 
 //a C version in general would need to cast dst and src to integer type
 //in order not to violate provenance.
+//The behavior is undefined if invalid pointers (like NULL) are passed.
 void	*ft_memmove(void *dest, const void *src, size_t n)
 {
 	__asm__ volatile (
