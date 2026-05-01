@@ -6,7 +6,7 @@
 /*   By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 15:52:05 by mhuszar           #+#    #+#             */
-/*   Updated: 2026/05/01 18:47:42 by mhuszar          ###   ########.fr       */
+/*   Updated: 2026/05/01 20:32:30 by mhuszar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_list	*ft_lstlast(t_list *lst)
 	__asm__ volatile ("test %%rdi, %%rdi; jz 2f; 1: mov %%rdi, %%rsi;"
 		"movq 8(%%rdi), %%rdi; test %%rdi, %%rdi; jnz 1b; 2:"
 		: "=S" (res), "+D" (lst)
-		:
+		: "0" (0)
 		: "memory", "cc"
 	);
 	return (res);

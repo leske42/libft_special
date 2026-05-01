@@ -6,7 +6,7 @@
 /*   By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 15:52:05 by mhuszar           #+#    #+#             */
-/*   Updated: 2026/05/01 19:17:33 by mhuszar          ###   ########.fr       */
+/*   Updated: 2026/05/01 20:45:56 by mhuszar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,12 @@
 //treats lst being NULL as UB
 void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	__asm__	volatile ("test %%rdi, %%rdi; jz 2f;"
-			"movq %%rsi, 8(%%rdi); 2:"
+	__asm__	volatile ("mov (%%rcx), %%rdx;"
+			"test %%rdx, %%rdx; jnz 1f; mov %%rsi, (%%rcx); jmp 2f;"
+			"1: movq %%rsi, 8(%%rdi); 2:"
 			: "=D" (lst), "+S" (new)
-			: "D" (ft_lstlast(*lst))
-			: "memory", "cc"
+			: "D" (ft_lstlast(*lst)), "c" (lst)
+			: "memory", "cc", "rdx"
 			);
 }
 /*
