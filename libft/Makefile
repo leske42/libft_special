@@ -6,7 +6,7 @@
 #    By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/12 15:59:38 by mhuszar           #+#    #+#              #
-#    Updated: 2026/02/23 17:32:13 by mhuszar          ###   ########.fr        #
+#    Updated: 2026/05/01 17:50:03 by mhuszar          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,8 @@ SOURCE_RZ = ft_putendl_fd.c ft_putnbr_fd.c ft_strlcpy.c ft_strtrim.c ft_itoa.c
 SOURCE = $(SOURCE_STD) $(SOURCE_RZ)
 OBJECTS = $(SOURCE:.c=.o)
 
+all: $(NAME)
+
 $(NAME): $(OBJECTS)
 	ar -rc libft.a $(OBJECTS)
 
@@ -32,8 +34,6 @@ $(NAME): $(OBJECTS)
 
 $(SOURCE_RZ:.c=.o): CFLAGS += -mno-red-zone
 
-all: $(NAME)
-
 clean:
 	rm -f $(OBJECTS)
 
@@ -41,3 +41,7 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
+
+bonus: all
+
+.PHONY: all clean fclean re bonus
