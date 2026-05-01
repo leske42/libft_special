@@ -6,7 +6,7 @@
 /*   By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 11:07:19 by mhuszar           #+#    #+#             */
-/*   Updated: 2026/05/01 18:14:23 by mhuszar          ###   ########.fr       */
+/*   Updated: 2026/05/01 18:22:51 by mhuszar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,6 @@ int		ft_toupper(int c);
 
 //list functions
 t_list	*ft_lstnew(void *content);
+void	ft_lstadd_front(t_list **lst, t_list *new);
 
 #endif
