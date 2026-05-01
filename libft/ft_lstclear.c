@@ -25,6 +25,7 @@ void	ft_lstclear(t_list **lst, void (*del)(void*))
 		ft_lstdelone(proxy, del);
 		proxy = tmp;
 	}
+	*lst = NULL;
 }
 /*
 #include <stdio.h>
