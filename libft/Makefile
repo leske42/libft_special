@@ -6,7 +6,7 @@
 #    By: mhuszar <mhuszar@student.42vienna.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/12 15:59:38 by mhuszar           #+#    #+#              #
-#    Updated: 2026/05/01 19:50:46 by mhuszar          ###   ########.fr        #
+#    Updated: 2026/05/01 20:51:09 by mhuszar          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ SOURCE_STD = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c \
 	ft_tolower.c ft_toupper.c ft_strdup.c ft_strmapi.c ft_striteri.c \
 	ft_split.c ft_strlcat.c ft_strjoin.c ft_strnstr.c ft_lstnew.c \
 	ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c \
-	ft_lstdelone.c ft_lstclear.c
+	ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c
 SOURCE_RZ = ft_putendl_fd.c ft_putnbr_fd.c ft_strlcpy.c ft_strtrim.c ft_itoa.c
 SOURCE = $(SOURCE_STD) $(SOURCE_RZ)
 OBJECTS = $(SOURCE:.c=.o)
